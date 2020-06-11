@@ -7,26 +7,26 @@ import html from 'remark-html'
 const postsDirectory = path.join(process.cwd(), 'posts')
 
 export function getSortedPostsData() {
-  // /posts　配下のファイル名を取得する
+  // Get file names under /posts
   const fileNames = fs.readdirSync(postsDirectory)
   const allPostsData = fileNames.map(fileName => {
-    // id を取得するためにファイル名から ".md" を削除する
+    // Remove ".md" from file name to get id
     const id = fileName.replace(/\.md$/, '')
 
-    // マークダウンファイルを文字列として読み取る
+    // Read markdown file as string
     const fullPath = path.join(postsDirectory, fileName)
     const fileContents = fs.readFileSync(fullPath, 'utf8')
 
-    // 投稿のメタデータ部分を解析するために gray-matter を使う
+    // Use gray-matter to parse the post metadata section
     const matterResult = matter(fileContents)
 
-    // データを id と合わせる
+    // Combine the data with the id
     return {
       id,
-      ...matterResult.data
+      ...(matterResult.data as { date: string; title: string })
     }
   })
-  // 投稿を日付でソートする
+  // Sort posts by date
   return allPostsData.sort((a, b) => {
     if (a.date < b.date) {
       return 1
@@ -38,20 +38,6 @@ export function getSortedPostsData() {
 
 export function getAllPostIds() {
   const fileNames = fs.readdirSync(postsDirectory)
-
-  // 以下のような配列を返します:
-  // [
-  //   {
-  //     params: {
-  //       id: 'ssg-ssr'
-  //     }
-  //   },
-  //   {
-  //     params: {
-  //       id: 'pre-rendering'
-  //     }
-  //   }
-  // ]
   return fileNames.map(fileName => {
     return {
       params: {
@@ -61,23 +47,23 @@ export function getAllPostIds() {
   })
 }
 
-export async function getPostData(id) {
+export async function getPostData(id: string) {
   const fullPath = path.join(postsDirectory, `${id}.md`)
   const fileContents = fs.readFileSync(fullPath, 'utf8')
 
-  // 投稿のメタデータ部分を解析するために gray-matter を使う
+  // Use gray-matter to parse the post metadata section
   const matterResult = matter(fileContents)
 
-  // マークダウンを HTML 文字列に変換するために remark を使う
+  // Use remark to convert markdown into HTML string
   const processedContent = await remark()
     .use(html)
     .process(matterResult.content)
   const contentHtml = processedContent.toString()
 
-  // データを id および contentHtml と組み合わせる
+  // Combine the data with the id and contentHtml
   return {
     id,
     contentHtml,
-    ...matterResult.data
+    ...(matterResult.data as { date: string; title: string })
   }
 }
