@@ -17,7 +17,7 @@ date: "2018-05-07"
 - データ連携のハブ
 - 拡張性の高いストリーミングログコレクタ
 
-  ![inline fill](./learning_fluetnd/fluentd-before.png)![inline fill](fluentd-architecture.png)
+  ![inline fill](/images/learning_fluetnd/learning_fluetnd/fluentd-before.png)![inline fill](/images/learning_fluetnd/fluentd-architecture.png)
 
 ---
 
@@ -27,7 +27,7 @@ date: "2018-05-07"
 - Kubernetes や Prometheus といったクラウドネイティブな OSS 技術の推進を行う団体
 - Kubernetes環境におけるログ収集ツールの **標準** となった
 
-![inline fill](fluentd-before.png)![inline fill](fluentd-architecture.png)
+![inline fill](/images/learning_fluetnd/fluentd-before.png)![inline fill](/images/learning_fluetnd/fluentd-architecture.png)
 
 ---
 
@@ -245,7 +245,7 @@ Output側ではBufferとQueueという仕組みがある。
 - enqueue: `buffer_chunk_limit` を超えた場合押し出される場合と `flush_interval` を経過した場合渡されるケース
 - それぞれ設定すれば柔軟にログを送ることができる
 
-![inline 50%](buffer-internal-and-parameters_v0.12.png)
+![inline 50%](/images/learning_fluetnd/buffer-internal-and-parameters_v0.12.png)
 
 ---
 
@@ -299,7 +299,7 @@ matchの数だけこのかけ合わせた値が必要になるので注意が必
 
 ## **バッファ設計(v1)**
 
-![inline 110%](fluentd-v0.14-plugin-api-overview.png)
+![inline 110%](/images/learning_fluetnd/luentd-v0.14-plugin-api-overview.png)
 
 ---
 # **Embulk**
