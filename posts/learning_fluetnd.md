@@ -17,7 +17,7 @@ date: "2018-05-07"
 - データ連携のハブ
 - 拡張性の高いストリーミングログコレクタ
 
-  ![inline fill](/images/learning_fluetnd/learning_fluetnd/fluentd-before.png)![inline fill](/images/learning_fluetnd/fluentd-architecture.png)
+![inline fill](/images/learning_fluetnd/fluentd-before.png)![inline fill](/images/learning_fluetnd/fluentd-architecture.png)
 
 ---
 
