@@ -3,6 +3,7 @@ import { getAllPostIds, getPostData } from '../../lib/posts'
 import Head from 'next/head'
 import Date from '../../components/date'
 import utilStyles from '../../styles/utils.module.css'
+import articleStyles from '../../styles/article.module.css'
 import { GetStaticProps, GetStaticPaths } from 'next'
 
 export default function Post({
@@ -15,7 +16,7 @@ export default function Post({
     }
   }) {
   return (
-    <Layout>
+    <Layout wide>
       <Head>
         <title>{postData.title}</title>
       </Head>
@@ -24,7 +25,10 @@ export default function Post({
         <div className={utilStyles.lightText}>
           <Date dateString={postData.date} />
         </div>
-        <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
+        <div
+          className={articleStyles.content}
+          dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
+        />
       </article>
     </Layout>
   )

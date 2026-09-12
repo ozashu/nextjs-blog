@@ -8,13 +8,15 @@ export const siteTitle = 'My Website'
 
 export default function Layout({
   children,
-  home
+  home,
+  wide
 }: {
     children: React.ReactNode
     home?: boolean
+    wide?: boolean
   }) {
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${wide ? styles.containerWide : ''}`}>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta
