@@ -1,6 +1,4 @@
 import Head from 'next/head'
-import styles from './layout.module.css'
-import utilStyles from '../styles/utils.module.css'
 import Link from 'next/link'
 
 const name = 'Shuhei Ozawa'
@@ -16,7 +14,9 @@ export default function Layout({
     wide?: boolean
   }) {
   return (
-    <div className={`${styles.container} ${wide ? styles.containerWide : ''}`}>
+    <div
+      className={`mx-auto mb-24 mt-12 px-4 ${wide ? 'max-w-2xl' : 'max-w-xl'}`}
+    >
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta
@@ -32,27 +32,29 @@ export default function Layout({
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <header className={styles.header}>
+      <header className="flex flex-col items-center">
         {home ? (
           <>
             <img
               src="/images/profile.jpg"
-              className={`${styles.headerHomeImage} ${utilStyles.borderCircle}`}
+              className="h-32 w-32 rounded-full"
               alt={name}
             />
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
+            <h1 className="my-4 text-4xl leading-tight font-extrabold tracking-tight">
+              {name}
+            </h1>
           </>
         ) : (
             <>
               <Link href="/">
                 <img
                   src="/images/profile.jpg"
-                  className={`${styles.headerImage} ${utilStyles.borderCircle}`}
+                  className="h-24 w-24 rounded-full"
                   alt={name}
                 />
               </Link>
-              <h2 className={utilStyles.headingLg}>
-                <Link href="/" className={utilStyles.colorInherit}>
+              <h2 className="my-4 text-2xl leading-snug">
+                <Link href="/" className="text-inherit">
                   {name}
                 </Link>
               </h2>
@@ -61,7 +63,7 @@ export default function Layout({
       </header>
       <main>{children}</main>
       {!home && (
-        <div className={styles.backToHome}>
+        <div className="mt-12">
           <Link href="/">← Back to home</Link>
         </div>
       )}
