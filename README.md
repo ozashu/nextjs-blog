@@ -1,20 +1,20 @@
 # [https://ozashu.com/](https://ozashu.com/)
 
-## Development
+## 開発
 
 ```bash
 yarn install
 yarn dev
 ```
 
-## Writing a new post
+## 新しい投稿を書く
 
-Posts live under `posts/<year>/<YYYY-MM-DD-slug>/index.md`. The directory
-name (`slug`) becomes the post's URL (`/posts/<slug>`), so keep it stable
-even if you later move the post to a different year folder.
+投稿は `posts/<year>/<YYYY-MM-DD-slug>/index.md` に配置します。ディレクトリ名
+（`slug`）が投稿のURL（`/posts/<slug>`）になるため、後で別の年のフォルダに
+移動した場合でも変更しないでください。
 
-1. Create a new directory, e.g. `posts/2026/2026-09-13-my-new-post/`.
-2. Add an `index.md` file inside it with frontmatter and Markdown content:
+1. `posts/2026/2026-09-13-my-new-post/` のような新しいディレクトリを作成します。
+2. その中に、フロントマターとMarkdownの内容を含む `index.md` ファイルを追加します。
 
    ```markdown
    ---
@@ -22,16 +22,16 @@ even if you later move the post to a different year folder.
    date: "2026-09-13"
    ---
 
-   Post content goes here.
+   ここに投稿の内容を書きます。
    ```
 
-3. If the post needs images, place them under `public/images/<slug>/` and
-   reference them with an absolute path, e.g. `![alt](/images/<slug>/photo.png)`.
-4. Run `yarn dev` to preview locally. The post appears on the top page,
-   sorted by `date`, and is reachable at `/posts/<slug>`.
+3. 投稿に画像が必要な場合は `public/images/<slug>/` に配置し、
+   `![alt](/images/<slug>/photo.png)` のように絶対パスで参照します。
+4. `yarn dev` を実行してローカルでプレビューします。投稿はトップページに
+   `date` でソートされて表示され、`/posts/<slug>` からアクセスできます。
 
 ## About
 
-- This site uses [Twemoji](https://github.com/twitter/twemoji) by Twitter (CC-BY 4.0).
-- License for the posts: ©2020 Shuhei Ozawa. All rights reserved.
-- Non-post code: [MIT License](license-code.md).
+- このサイトはTwitterの[Twemoji](https://github.com/twitter/twemoji)（CC-BY 4.0）を使用しています。
+- 投稿のライセンス: ©2020 Shuhei Ozawa. All rights reserved.
+- 投稿以外のコード: [MITライセンス](license-code.md)。
