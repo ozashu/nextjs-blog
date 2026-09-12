@@ -1,22 +1,35 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
-import remark from 'remark'
+import { remark } from 'remark'
 import html from 'remark-html'
-// @ts-ignore
-import highlight from 'rehype-highlight';
+import highlight from 'rehype-highlight'
 
 const postsDirectory = path.join(process.cwd(), 'posts')
 
-export function getSortedPostsData() {
-  // Get file names under /posts
-  const fileNames = fs.readdirSync(postsDirectory)
-  const allPostsData = fileNames.map(fileName => {
-    // Remove ".md" from file name to get id
-    const id = fileName.replace(/\.md$/, '')
+// Posts live under posts/<year>/<slug>/index.md. The post id is the slug
+// (the directory name), so it stays stable even if the post is moved to a
+// different year folder.
+function findPostSlugDirs(): { slug: string; dir: string }[] {
+  const yearDirs = fs
+    .readdirSync(postsDirectory, { withFileTypes: true })
+    .filter(entry => entry.isDirectory())
 
-    // Read markdown file as string
-    const fullPath = path.join(postsDirectory, fileName)
+  return yearDirs.flatMap(yearDir => {
+    const yearPath = path.join(postsDirectory, yearDir.name)
+    return fs
+      .readdirSync(yearPath, { withFileTypes: true })
+      .filter(entry => entry.isDirectory())
+      .map(slugDir => ({
+        slug: slugDir.name,
+        dir: path.join(yearPath, slugDir.name)
+      }))
+  })
+}
+
+export function getSortedPostsData() {
+  const allPostsData = findPostSlugDirs().map(({ slug, dir }) => {
+    const fullPath = path.join(dir, 'index.md')
     const fileContents = fs.readFileSync(fullPath, 'utf8')
 
     // Use gray-matter to parse the post metadata section
@@ -24,7 +37,7 @@ export function getSortedPostsData() {
 
     // Combine the data with the id
     return {
-      id,
+      id: slug,
       ...(matterResult.data as { date: string; title: string })
     }
   })
@@ -39,18 +52,21 @@ export function getSortedPostsData() {
 }
 
 export function getAllPostIds() {
-  const fileNames = fs.readdirSync(postsDirectory)
-  return fileNames.map(fileName => {
+  return findPostSlugDirs().map(({ slug }) => {
     return {
       params: {
-        id: fileName.replace(/\.md$/, '')
+        id: slug
       }
     }
   })
 }
 
 export async function getPostData(id: string) {
-  const fullPath = path.join(postsDirectory, `${id}.md`)
+  const { dir } = findPostSlugDirs().find(post => post.slug === id) ?? {}
+  if (!dir) {
+    throw new Error(`Post not found: ${id}`)
+  }
+  const fullPath = path.join(dir, 'index.md')
   const fileContents = fs.readFileSync(fullPath, 'utf8')
 
   // Use gray-matter to parse the post metadata section
